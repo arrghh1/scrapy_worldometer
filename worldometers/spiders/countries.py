@@ -15,7 +15,6 @@ class CountriesSpider(scrapy.Spider):
                 link = country.xpath(".//@href").get()
 
         #secondly, we want to make sure we pass an object back (ticker?)
-                yield {
-                    'country_name':name,
-                    'country_link':link
+                absolute_url = f"https://www.worldometers.info{link}"
+                yield scrapy.Request(url=absolute_url)
                 }
