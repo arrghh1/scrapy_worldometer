@@ -19,4 +19,11 @@ class CountriesSpider(scrapy.Spider):
                 yield response.follow(url=link, callback=self.parse_country)
 
     def parse_country(self, response):
-        logging.info(response.url)
+        rows = response.xpath(f"(//table[contains(@class,'table-list')])[1]/tbody/tr")
+        for row in rows:
+            year = row.xpath(".//td[1]/text()").get()
+            population = row.xpath(".//td[2]/strong/text()").get()
+            yield {
+                'year':year,
+                'population':population
+            }
