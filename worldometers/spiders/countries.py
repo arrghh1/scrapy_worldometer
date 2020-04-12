@@ -15,6 +15,6 @@ class CountriesSpider(scrapy.Spider):
                 link = country.xpath(".//@href").get()
 
         #secondly, we want to make sure we pass an object back (ticker?)
-                absolute_url = f"https://www.worldometers.info{link}"
+                absolute_url = response.urljoin(link) # this works becaquse it knows the domain already. f"https://www.worldometers.info{link}"
                 yield scrapy.Request(url=absolute_url)
                 }
