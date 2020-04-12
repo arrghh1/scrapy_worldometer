@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-
+import logging
 
 class CountriesSpider(scrapy.Spider):
     name = 'countries'
@@ -16,5 +16,7 @@ class CountriesSpider(scrapy.Spider):
 
         #secondly, we want to make sure we pass an object back (ticker?)
                 #absolute_url = response.urljoin(link) # this works becaquse it knows the domain already. f"https://www.worldometers.info{link}"
-                yield response.follow(url=link)
-                }
+                yield response.follow(url=link, callback=self.parse_country)
+
+    def parse_country(self, response):
+        logging.info(response.url)
